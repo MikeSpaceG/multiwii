@@ -7,6 +7,15 @@ import javax.swing.JFileChooser; // Saving dialogue
 import javax.swing.filechooser.FileFilter; // for our configuration file filter "*.mwi"
 import javax.swing.JOptionPane; // for message dialogue
 
+import java.util.List;
+import java.util.LinkedList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Properties;
+import java.util.Date;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+
 // TODO add new msp :  pid description with bound and scale
 
 PrintWriter output;
