@@ -1,1 +1,8 @@
 Clone of MultiWii SVN repo with the _shared dirs removed because someone doesn't know about branches...
+
+Building MultiWiiConf:
+Prerequisites
+Processing: http://processing.org/download/
+ControlP5: http://www.sojamo.de/libraries/controlP5/
+
+Run Processing, exit, unpack ControlP5 to sketchbook directory, run Processing again...

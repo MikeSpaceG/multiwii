@@ -104,7 +104,8 @@ int activation[];
 Button buttonCheckbox[];
 PFont font8, font9, font12, font15;
 
-void create_checkboxes(String[] names) {
+void create_checkboxes(String[] names)
+{
   /* destroy old buttons */
   for (int i=0; i<CHECKBOXITEMS; i++) {
     buttonCheckbox[i].remove();
@@ -127,7 +128,8 @@ void create_checkboxes(String[] names) {
 
 // coded by Eberhard Rensch
 // Truncates a long port name for better (readable) display in the GUI
-String shortifyPortName(String portName, int maxlen)  {
+String shortifyPortName(String portName, int maxlen)
+{
   String shortName = portName;
   if(shortName.startsWith("/dev/")) shortName = shortName.substring(5);  
   if(shortName.startsWith("tty.")) shortName = shortName.substring(4); // get rid of leading tty. part of device name
@@ -136,13 +138,15 @@ String shortifyPortName(String portName, int maxlen)  {
   return shortName;
 }
 
-controlP5.Controller hideLabel(controlP5.Controller c) {
+controlP5.Controller hideLabel(controlP5.Controller c)
+{
   c.setLabel("");
   c.setLabelVisible(false);
   return c;
 }
 
-void setup() {
+void setup()
+{
   size(windowsX,windowsY,OPENGL);
   frameRate(20); 
 
@@ -397,12 +401,14 @@ int mode;
 boolean toggleRead = false,toggleReset = false,toggleCalibAcc = false,toggleCalibMag = false,toggleWrite = false,toggleRXbind = false,toggleSetSetting = false;
 
 //send msp without payload
-private List<Byte> requestMSP(int msp) {
+private List<Byte> requestMSP(int msp)
+{
   return  requestMSP( msp, null);
 }
 
 //send multiple msp without payload
-private List<Byte> requestMSP (int[] msps) {
+private List<Byte> requestMSP (int[] msps)
+{
   List<Byte> s = new LinkedList<Byte>();
   for (int m : msps) {
     s.addAll(requestMSP(m, null));
@@ -411,7 +417,8 @@ private List<Byte> requestMSP (int[] msps) {
 }
 
 //send msp with payload
-private List<Byte> requestMSP (int msp, Character[] payload) {
+private List<Byte> requestMSP (int msp, Character[] payload)
+{
   if(msp < 0) {
    return null;
   }
@@ -438,7 +445,8 @@ private List<Byte> requestMSP (int msp, Character[] payload) {
   return (bf);
 }
 
-void sendRequestMSP(List<Byte> msp) {
+void sendRequestMSP(List<Byte> msp)
+{
   byte[] arr = new byte[msp.size()];
   int i = 0;
   for (byte b: msp) {
@@ -447,7 +455,8 @@ void sendRequestMSP(List<Byte> msp) {
   g_serial.write(arr); // send the complete byte sequence in one go
 }
 
-public void evaluateCommand(byte cmd, int dataSize) {
+public void evaluateCommand(byte cmd, int dataSize)
+{
   int i;
   int icmd = (int)(cmd&0xFF);
   switch(icmd) {
@@ -609,7 +618,8 @@ public void evaluateCommand(byte cmd, int dataSize) {
 private int present = 0;
 int time,time2,time3,time4;
 
-void draw() {
+void draw()
+{
   List<Character> payload;
   int i,aa;
   float val,inter,a,b,h;
@@ -1463,7 +1473,8 @@ void draw() {
   if (versionMisMatch == 1) {textFont(font15);fill(#000000);text("GUI vs. Arduino: Version or Buffer size mismatch",180,420); return;}
 }
 
-void drawMotor(float x1, float y1, int mot_num, char dir) {   //Code by Danal
+void drawMotor(float x1, float y1, int mot_num, char dir)
+{   //Code by Danal
   float size = 30.0;
   pushStyle();
   float d = 0;
@@ -1498,48 +1509,58 @@ void DEBUG2(boolean theFlag) {debug2Graph = theFlag;}
 void DEBUG3(boolean theFlag) {debug3Graph = theFlag;}
 void DEBUG4(boolean theFlag) {debug4Graph = theFlag;}
 
-public void controlEvent(ControlEvent theEvent) {
+public void controlEvent(ControlEvent theEvent)
+{
   if (theEvent.isGroup()) if (theEvent.name()=="portComList") InitSerial(theEvent.group().value()); // initialize the serial port selected
 }
 
 
 
-public void bSTART() {
+public void bSTART()
+{
   if(graphEnable == false) {return;}
   graph_on=1;
   toggleRead=true;
   g_serial.clear();
 }
 
-public void bSTOP() {
+public void bSTOP()
+{
   graph_on=0;
 }
 
-public void SETTING() {
+public void SETTING()
+{
   toggleSetSetting = true;
 }
 
-public void READ() {
+public void READ()
+{
   toggleRead = true;
 }
 
-public void RESET() {
+public void RESET()
+{
   toggleReset = true;
 }
 
-public void WRITE() {
+public void WRITE()
+{
   toggleWrite = true;
 }
 
-public void CALIB_ACC() {
+public void CALIB_ACC()
+{
   toggleCalibAcc = true;
 }
-public void CALIB_MAG() {
+public void CALIB_MAG()
+{
   toggleCalibMag = true;
 }
 
 // initialize the serial port selected in the listBox
-void InitSerial(float portValue) {
+void InitSerial(float portValue)
+{
   if (portValue < commListMax) {
     String portPos = Serial.list()[int(portValue)];
     txtlblWhichcom.setValue("COM = " + shortifyPortName(portPos, 8));
@@ -1563,7 +1584,8 @@ void InitSerial(float portValue) {
   }
 }
 
-void SaveSerialPort(String port ) {
+void SaveSerialPort(String port )
+{
     output = createWriter(portnameFile); 
     output.print( port + ';' + GUI_BaudRate); // Write the comport to the file
     output.flush(); // Writes the remaining data to the file
@@ -1571,14 +1593,16 @@ void SaveSerialPort(String port ) {
 }
 
 boolean portOK=false;
-public void bQCONN(){
+public void bQCONN()
+{
   ReadSerialPort();
   if (portOK){
   InitSerial(SerialPort);
   bSTART(); }
 }
 
-void ReadSerialPort() {
+void ReadSerialPort()
+{
     reader = createReader(portnameFile);  
     String line; 
   try { 
@@ -1606,7 +1630,8 @@ void ReadSerialPort() {
 }
 
 //save the content of the model to a file
-public void bSAVE() {
+public void bSAVE()
+{
   updateModel();
   SwingUtilities.invokeLater(new Runnable(){
     public void run() {
@@ -1672,7 +1697,8 @@ public void bSAVE() {
 }
 
 // import the content of a file into the model
-public void bIMPORT(){
+public void bIMPORT()
+{
   SwingUtilities.invokeLater(new Runnable(){
     public void run(){
       final JFileChooser fc = new JFileChooser();
@@ -1721,14 +1747,16 @@ public void bIMPORT(){
 
 //update the model with the value view 
 
-public void updateModel(){
+public void updateModel()
+{
         updateModelMSP_SET_RC_TUNING();
         updateModelMSP_SET_PID();
         updateModelMSP_SET_MISC();
 }
 
 
-public void updateModelMSP_SET_RC_TUNING(){
+public void updateModelMSP_SET_RC_TUNING()
+{
         MWI.setProperty("rc.rate",String.valueOf(confRC_RATE.value()));
         MWI.setProperty("rc.expo",String.valueOf(confRC_EXPO.value()));
         MWI.setProperty("rc.rollpitch.rate",String.valueOf(rollPitchRate.value()));
@@ -1739,21 +1767,24 @@ public void updateModelMSP_SET_RC_TUNING(){
 }
 
 public void updateModelMSP_SET_PID(){
-for(int i=0;i<PIDITEMS;i++) {
+for(int i=0;i<PIDITEMS;i++)
+{
     MWI.setProperty("pid."+i+".p",String.valueOf(confP[i].value()));
     MWI.setProperty("pid."+i+".i",String.valueOf(confI[i].value()));
     MWI.setProperty("pid."+i+".d",String.valueOf(confD[i].value()));
  }
 }
 
-public void updateModelMSP_SET_MISC(){  
+public void updateModelMSP_SET_MISC()
+{  
         MWI.setProperty("power.trigger",String.valueOf(round(confPowerTrigger.value())));
 }
 
 
 // use the model to update the value of the view
 
-public void updateView(){
+public void updateView()
+{
   // MSP_SET_RC_TUNING
   confRC_RATE.setValue(Float.valueOf(MWI.conf.getProperty("rc.rate")));
   confRC_EXPO.setValue(Float.valueOf(MWI.conf.getProperty("rc.expo")));
@@ -1772,25 +1803,28 @@ public void updateView(){
 
   // MSP_SET_MISC
   confPowerTrigger.setValue(Float.valueOf(MWI.conf.getProperty("power.trigger")));
- }
+}
       
 
 //  our model 
-static class MWI{
-private static Properties conf = new Properties();
+static class MWI
+{
+	private static Properties conf = new Properties();
 
-public static void setProperty(String key ,String value ){
-conf.setProperty( key,value );
-}
+	public static void setProperty(String key ,String value ){
+	conf.setProperty( key,value );
+	}
 
-public static String getProperty(String key ){
- return conf.getProperty( key,"0");
-}
+	public static String getProperty(String key )
+	{
+	 return conf.getProperty( key,"0");
+	}
 
-public static void clear(){
-        conf= null; // help gc
-        conf = new Properties();
-}
+	public static void clear()
+	{
+			conf= null; // help gc
+			conf = new Properties();
+	}
 
 }
 
@@ -1798,7 +1832,8 @@ public static void clear(){
 //********************************************************
 //********************************************************
 
-class cDataArray {
+class cDataArray
+{
   float[] m_data;
   int m_maxSize, m_startIndex = 0, m_endIndex = 0, m_curSize;
   
@@ -1832,7 +1867,8 @@ class cDataArray {
 }
 
 // This class takes the data and helps graph it
-class cGraph {
+class cGraph
+{
   float m_gWidth, m_gHeight, m_gLeft, m_gBottom, m_gRight, m_gTop;
   
   cGraph(float x, float y, float w, float h) {
@@ -1862,7 +1898,8 @@ class cGraph {
   }
 }
 
-public class MwiFileFilter extends FileFilter {
+public class MwiFileFilter extends FileFilter
+{
  public boolean accept(File f) {
    if(f != null) {
      if(f.isDirectory()) {
@@ -1888,13 +1925,15 @@ public class MwiFileFilter extends FileFilter {
   public String getDescription() {return "*.mwi Multiwii configuration file";}   
 }
 
-public void bRXbind() { //Bind a Spektrum Satellite
+public void bRXbind()
+{ //Bind a Spektrum Satellite
   toggleRXbind = true;
 }
 
 // Test with tooltips....
-public void Tooltips(){
+public void Tooltips()
+{
   controlP5.getTooltip().setDelay(300);
   controlP5.getTooltip().register("bQCONN","ComPort must be Selected First Time.") ;  
   controlP5.getTooltip().register("SETTING","Save Multiple settings.") ;
-  }
+}
