@@ -1,3 +1,4 @@
+*.swp
 MultiWiiConf/SerialPort.txt
 MultiWiiConf/application.linux32/
 MultiWiiConf/application.linux64/
