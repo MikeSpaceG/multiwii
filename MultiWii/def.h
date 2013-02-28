@@ -1236,6 +1236,7 @@
 #endif
 
 #if defined(HK_MultiWii_328P ) 
+  #define I2C_SPEED 400000L   //400kHz fast mode
   #define ITG3200
   #define BMA180
   #define HMC5883 
